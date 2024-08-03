@@ -3,13 +3,27 @@ const server = require("http").createServer(app);
 const cors = require("cors");
 const mongoose = require("mongoose")
 const Document = require("./Document")
-
+import path from 'path';
 
 
 
 mongoose.connect("mongodb+srv://j4116507:0JWcQEPTfu0yxQxP@cluster0.nfqnxbb.mongodb.net/")
 .then(() => console.log("DB Connected"))
 .catch((error) => console.log(error))
+
+const __dirname = path.resolve();
+
+
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  });
+  
+
+
+
+
 
 
 const defaultValue = ""
